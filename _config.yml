@@ -1,10 +1,10 @@
 # Site settings
-title: BY Blog
-SEOTitle: 甘泉的博客 | BY Blog
+title: Gavin Blog
+SEOTitle: 甘泉的博客 | Gavin Blog
 header-img: img/post-bg-desk.jpg
 email: ganquan3640@gmail.com
 description: "Every failure is leading towards success."
-keyword: "BY, BY Blog, 甘泉的博客, ganquan, 甘泉, Android, javascript, 逆向"
+keyword: "Gavin, Gavin Blog, 甘泉的博客, ganquan, 甘泉, Android, javascript, 逆向"
 url: "http://CarryGanLove.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/CarryGanLove/CarryGanLove.github.io.git" # you code repository
@@ -62,11 +62,11 @@ kramdown:
 # Gitalk
 gitalk:
   enable: true    #是否开启Gitalk评论
-  clientID: f2c84e7629bb1446c1a4                            #生成的clientID
-  clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
-  repo: qiubaiying.github.io    #仓库名称
-  owner: qiubaiying    #github用户名
-  admin: qiubaiying
+  clientID: 76eaa50e7a1def63b6de                            #生成的clientID
+  clientSecret: e6ac2d2eaa4940ccd35e25f888c6c32d4c3b5b10    #生成的clientSecret
+  repo: CarryGanLove.github.io    #仓库名称
+  owner: CarryGanLove    #github用户名
+  admin: CarryGanLove
   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
@@ -102,7 +102,7 @@ service-worker: true
 #         title: "WY",
 #         href: "http://zhengwuyang.com"
 #     },{
-#         title: "简书·BY",
+#         title: "简书·Gavin",
 #         href: "http://www.jianshu.com/u/e71990ada2fd"
 #     },{
 #         title: "Apple",
