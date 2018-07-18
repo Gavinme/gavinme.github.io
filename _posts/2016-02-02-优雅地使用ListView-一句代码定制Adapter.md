@@ -10,11 +10,14 @@ tags:
     - android
     - ListView
 ---
+
 #前言
+
 >如何高效并简洁的使用`listview`，首先自然是关心如何对BaseAdapter定制。站在代码抽象的角度，子类对接口进行实现，父类应该做好一切需要的工作。[点击此处，源码已上传github](https://github.com/CarryGanLove/EasyBaseAdapter_for_listview)
 通过继承我的BaeListAdapter,使用时不再需要关心view的复用和ViewHolder的实例化和convertView实例化，也不用关系多个ViewHolder的类型检测，这一切都是自动的，而只需要实现自定义`ViewHolder`的`setView()`方法数据绑定，具体实现请看下文。
 
 #如何定制自己的ListView绑定的Adapter
+
 下面是继承`BaseAdapter`的`getView()`方法中一段喜闻乐见的代码：
 
 ```java
@@ -57,21 +60,22 @@ tags:
 
 ```java
 @Override protected void onBindViewHolder(List<ViewBundle> list) {
- list.add(new ViewBundle(R.layout.list_item_0, VHtype1.class)); 
- list.add(new ViewBundle(R.layout.list_item_1, VHtype2.class)); 
- list.add(new    ViewBundle(R.layout.list_item_2, VHtype3.class)); 
+ list.add(new ViewBundle(R.layout.list_item_0, VHtype1.class));
+ list.add(new ViewBundle(R.layout.list_item_1, VHtype2.class));
+ list.add(new    ViewBundle(R.layout.list_item_2, VHtype3.class));
 }
 ```
 
 当如重写getItemViewType()方法也是必要的，而type的位置就是List<ViewBundle>list中 ViewHolder类型所对应的位置了。其实这里可以进一步的抽象，在ViewHolder.class通过注解对layoutId关联，这样只需要add对应的class就OK了。具体可以参考这个项目的源码[落和APP](https://github.com/CarryGanLove/LuoheApp)。
 
 ```java
-@Overridepublic int getItemViewType(int position) { 
+@Overridepublic int getItemViewType(int position) {
   return super.getItemViewType(position);
 }
 ```
 
 其实看到这里实现一个adapter已经很简单了，如果这个框架只是实现了对子类的一个抽象显得没什么太大意义。在这里还有一个对adpter和ViewHolder类进行解耦的过程，因为数据绑定的方法应该是`ViewHolder`的对象的职能而不应该在Adapter中进行实现，这里面向对象思想很重要！下面是adpter和ViewHolder进一步解耦。
+
 ##ViewHolder的实现：
 
 ```java
@@ -99,6 +103,7 @@ tags:
   >为什么高效简约？可以具体查看[源码](https://github.com/CarryGanLove/EasyBaseAdapter_for_listview)的实现或继续阅读。
 
 #BaseListAdapter实现
+
 `public abstract class BaseListAdapter<T> extends BaseAdapter`
 BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可以看到一个成员对象
 `private List<T> list = new ArrayList<>();`
@@ -118,7 +123,7 @@ BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可�
         this.list.addAll(list);
         notifyDataSetChanged();
     }
-    
+
     /**
      * add the list ,but no clear
      *
@@ -128,7 +133,7 @@ BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可�
         this.list.addAll(list);
         notifyDataSetChanged();
     }
-    
+
     /**
      * clear all list
      */
@@ -137,13 +142,13 @@ BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可�
         notifyDataSetChanged();
     }
 ```
-	
+
 通过这些方法使得`Adapter`才真正成为`data controller`， 在每次需要数据操作的时候对`Adapter`进行发送消息。
 	下面就是真正源码抽象的过程了：
 ##1. 首先是getView()方法的抽象
 
 ```java
-	
+
     @Override
     public final View getView(int position, View convertView, ViewGroup parent) {
         BaseViewHolder viewHolder = null;
@@ -160,10 +165,10 @@ BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可�
         return convertView;
     }
 ```
-	
+
 在`getView`中通过`position`参数实例化对应的`viewHolder`对象`onCreateViewHolder`方法会call`getItemViewType`方法通过子类实现的`List<ViewBundle> ViewBundles`对象取得需要的ViewHolder.class类型然而通过反射去实例化。
 
-```java  
+```java
 	protected BaseViewHolder onCreateViewHolder(int pos,List<ViewBundle> ViewBundles){
         Class<? extends BaseViewHolder> clazz = ViewBundles
                 .get(getItemViewType(pos)).vHClazz;
@@ -203,6 +208,7 @@ BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可�
 ```
 
 ##2. ViewBundle的职能？
+
 在子类实现中有这样的一个方法`onBindViewHolder(List<ViewBundle> list)`，ViewBundle的作用是什么呢？
 
 ```java
@@ -223,7 +229,7 @@ BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可�
     }
 ```
 
-可以看到其实是一个layoutId和viewHolder类型的对应关系，通过list将数组对象传递给父类，通过下标取得对应的class值。  
+可以看到其实是一个layoutId和viewHolder类型的对应关系，通过list将数组对象传递给父类，通过下标取得对应的class值。
 
 到这里代码解析全部完毕，主要工作就是Adapter的简单定制，让子类的具体实现最小化。这样的处理在开发中可以减少相应的繁琐重复工作并降低错误率，父类中输出了输出了必要的log并在子类实现除错的情况跑出了对应的异常，可以很快的定位原因。
 
