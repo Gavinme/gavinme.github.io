@@ -43,8 +43,8 @@
 
 ```
 # Site settings
-title: BY Blog                    # 你的博客网站标题
-SEOTitle: 柏荧的博客 | BY Blog		# SEO 标题
+title: Gavin Blog                    # 你的博客网站标题
+SEOTitle: Gavin的博客 | Gavin Blog		# SEO 标题
 description: "Hey"	   	   # 随便说点，描述一下
 
 # SNS settings      
@@ -69,7 +69,7 @@ layout:     post
 title:      定时器 你真的会使用吗？
 subtitle:   iOS定时器详解
 date:       2016-12-13
-author:     BY
+author:     Gavin
 header-img: img/post-bg-ios9-web.jpg
 catalog: 	 true
 tags:
