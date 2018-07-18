@@ -1,10 +1,10 @@
 # Site settings
 title: Gavin Blog
-SEOTitle: 甘泉的博客 | Gavin Blog
+SEOTitle: 甘泉的博客 | Gavin's Blog
 header-img: img/post-bg-desk.jpg
 email: ganquan3640@gmail.com
 description: "Every failure is leading towards success."
-keyword: "Gavin, Gavin Blog, 甘泉的博客, ganquan, 甘泉, Android, javascript, 逆向"
+keyword: "Gavin, Gavin Blog, 甘泉的博客, ganquan, 甘泉, Android, javascript, 逆向,应用安全"
 url: "http://CarryGanLove.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/CarryGanLove/CarryGanLove.github.io.git" # you code repository
@@ -18,10 +18,8 @@ sidebar-avatar: https://avatars3.githubusercontent.com/u/13794806?s=400&u=9f6baa
 
 # SNS settings
 RSS: false
-# weibo_username:     CarryGanLove
-# zhihu_username:     CarryGanLove
 github_username:    CarryGanLove
-# facebook_username:  baiying.qiu.7
+# facebook_username:  Quad Gan
 jianshu_username:   f85192130fc7
 #twitter_username:   qiubaiying
 
