@@ -1,0 +1,230 @@
+---
+layout:     post
+title:      优雅地使用ListView
+subtitle:   一句代码定制Adapter
+date:       2016-02-02
+author:     BY
+header-img: img/post-bg-BJJ.jpg
+catalog: true
+tags:
+    - android
+    - ListView
+---
+#前言
+>如何高效并简洁的使用`listview`，首先自然是关心如何对BaseAdapter定制。站在代码抽象的角度，子类对接口进行实现，父类应该做好一切需要的工作。[点击此处，源码已上传github](https://github.com/CarryGanLove/EasyBaseAdapter_for_listview)
+通过继承我的BaeListAdapter,使用时不再需要关心view的复用和ViewHolder的实例化和convertView实例化，也不用关系多个ViewHolder的类型检测，这一切都是自动的，而只需要实现自定义`ViewHolder`的`setView()`方法数据绑定，具体实现请看下文。
+
+#如何定制自己的ListView绑定的Adapter
+下面是继承`BaseAdapter`的`getView()`方法中一段喜闻乐见的代码：
+
+```java
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ItemHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.home_city_list_item, null);
+            holder = new ItemHolder();
+            //bind holder views
+            convertView.setTag(holder);
+        } else {
+            holder = (ItemHolder) convertView.getTag();
+        }
+        //set holder views data
+        return convertView;
+    }
+```
+
+为了对`listview`的`item view`进行复用我们往往会在自己的`adapter`中写这样类似的重复代码，然而这一切都可以在父类中进行实现，子类只需要实现具体的数据绑定功能。
+下面是一段继承自我自定义的`BaseListAdapter`的代码。
+
+```java
+ class ListAdapter extends BaseListAdapterExt<PayMentInfoBean> {
+        public ListAdapter(Context context) {
+            super(context);
+        }
+        @Override
+        protected void onBindViewHolder(List<ViewBundle> list) {
+            list.add(new ViewBundle(R.layout.item_card_rentpay, ViewHolder.class));
+      //此处只需要传递ViewHolder的类型，和对应layoutId
+     //如果有多个ViewType时可以add多个不同的ViewHolder子类和对应layout的绑定关系
+        }
+    }
+```
+
+`BaseListAdapter`是一个模板类持有一个泛型`T`，它用来装载`List`中的实例化类型，
+`private List<T> list = new ArrayList<>();`
+通过继承`BaseListAdapter`在实现子类的时候通过实例化泛型传入具体类型，并重写
+`onBindViewHolder（）`方法，可以轻易地完整实现一个高效可用的自定义Adapter，然后可以愉快的通过LIstView的setAdapter()方法进行绑定了。然而这些并不够，通过该方法还可以传入多个不同的viewType实现一些复杂的多样式视图，通过`onBindViewHolder`传递给子类的`List<ViewBundle> list`参数，可以add多个不同的ViewHolder类型，例如像这样：
+
+```java
+@Override protected void onBindViewHolder(List<ViewBundle> list) {
+ list.add(new ViewBundle(R.layout.list_item_0, VHtype1.class)); 
+ list.add(new ViewBundle(R.layout.list_item_1, VHtype2.class)); 
+ list.add(new    ViewBundle(R.layout.list_item_2, VHtype3.class)); 
+}
+```
+
+当如重写getItemViewType()方法也是必要的，而type的位置就是List<ViewBundle>list中 ViewHolder类型所对应的位置了。其实这里可以进一步的抽象，在ViewHolder.class通过注解对layoutId关联，这样只需要add对应的class就OK了。具体可以参考这个项目的源码[落和APP](https://github.com/CarryGanLove/LuoheApp)。
+
+```java
+@Overridepublic int getItemViewType(int position) { 
+  return super.getItemViewType(position);
+}
+```
+
+其实看到这里实现一个adapter已经很简单了，如果这个框架只是实现了对子类的一个抽象显得没什么太大意义。在这里还有一个对adpter和ViewHolder类进行解耦的过程，因为数据绑定的方法应该是`ViewHolder`的对象的职能而不应该在Adapter中进行实现，这里面向对象思想很重要！下面是adpter和ViewHolder进一步解耦。
+##ViewHolder的实现：
+
+```java
+    class ViewHolder extends BaseListAdapterExt.BaseViewHolder<HouseDetail.PayMentInfoBean> {
+        @Bind(R.id.tv1)
+        TextView textView1;
+        @Bind(R.id.tv2)
+        TextView textView2;
+        @Bind(R.id.tv3)
+        TextView textView3;
+        @Bind(R.id.tv4)
+        TextView textView4;
+        @Override
+        protected void setView(HouseDetail.PayMentInfoBean bean, Context context) {//这里设置需要的数据
+            textView1.setText(bean.rentPaywayName);
+            textView2.setText(bean.serviceFee);
+            textView3.setText(bean.guarantee);
+            textView4.setText(bean.rentPrice);
+        }
+    }
+
+```
+
+在`ViewHolder.class`中加入了一个`setview`方法，并从父类中传过来`T bean,Context context`两参数，毫无疑问我们在这里进行数据绑定，至此，解耦过程完成。写法类似于`recycleview ViewHolder`中写法。`setView`方法是整个`listview`进行数据绑定真正需要实现的方法，也是唯一的一个。剩下的就只有一些class定义的代码，由于是abstract方法和泛型参数，IDE会给你提供一切，这一切代码都是自动生成的，除了Adapter和ViewHolder子类的名字。
+  >为什么高效简约？可以具体查看[源码](https://github.com/CarryGanLove/EasyBaseAdapter_for_listview)的实现或继续阅读。
+
+#BaseListAdapter实现
+`public abstract class BaseListAdapter<T> extends BaseAdapter`
+BaseListAdapter是一个模板类继承Android SDK中的BaseAdapter，里面可以看到一个成员对象
+`private List<T> list = new ArrayList<>();`
+
+通过该对象装载Adater中所需要的数据，经常看到有朋友在Adapter的外部持有Adapter中list引用用来改变Adapter中的数据，其实这样会导致两个对象同时对Adapter中的数据进行改变，风险是不可控的，而且外部的list生命周期在长于Adapter的时候会导致list来不及内存回收，如果做了一些非法的操作很容易使得list对象这块内存逃逸出去，比如用一个static的引用去指向它。在Adapter中增加一些数据改变的方法可以避免这一切情况的出现，而且很方便。
+
+```java
+/**
+     * 初始化list
+     *
+     * @param list
+     */
+    public void initList(List<T> list) {
+        if (this.list.size() > 0) {
+            this.list.clear();
+        }
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+    
+    /**
+     * add the list ,but no clear
+     *
+     * @param list
+     */
+    public void addList(List<T> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+    
+    /**
+     * clear all list
+     */
+    public void clearList() {
+        this.list.clear();
+        notifyDataSetChanged();
+    }
+```
+	
+通过这些方法使得`Adapter`才真正成为`data controller`， 在每次需要数据操作的时候对`Adapter`进行发送消息。
+	下面就是真正源码抽象的过程了：
+##1. 首先是getView()方法的抽象
+
+```java
+	
+    @Override
+    public final View getView(int position, View convertView, ViewGroup parent) {
+        BaseViewHolder viewHolder = null;
+        if (convertView == null) {
+            viewHolder = onCreateViewHolder(position, getViewBundles());
+            convertView = createView(position, viewHolder);
+        } else {
+            viewHolder = (BaseViewHolder) convertView.getTag();
+
+        }
+        if (convertView == null || convertView.getTag() == null)
+            throw new NullPointerException(" creatview fails");
+        onSetViewHolder(position, getItem(position), viewHolder);
+        return convertView;
+    }
+```
+	
+在`getView`中通过`position`参数实例化对应的`viewHolder`对象`onCreateViewHolder`方法会call`getItemViewType`方法通过子类实现的`List<ViewBundle> ViewBundles`对象取得需要的ViewHolder.class类型然而通过反射去实例化。
+
+```java  
+	protected BaseViewHolder onCreateViewHolder(int pos,List<ViewBundle> ViewBundles){
+        Class<? extends BaseViewHolder> clazz = ViewBundles
+                .get(getItemViewType(pos)).vHClazz;
+        return ViewUtil.getInstance(clazz);
+    }
+```
+
+拿到`ViewHolder`对象后就可以开始进行相应的数据set了，
+`onSetViewHolder(position, getItem(position), viewHolder);`这个是set data的方法:
+
+```java
+/**
+     * set data for viewHolder by viewType(through by getItemViewType)
+     *
+     * @param position
+     * @param bean
+     * @param baseViewHolder
+     */
+    protected void onSetViewHolder(int position, T bean,
+                                   BaseViewHolder baseViewHolder) {
+        baseViewHolder.setView(bean, getContext());
+
+    }
+```
+
+在onSetViewHolder方法中可以看到回去调用ViewHolder父类的setView()方法，下面是BaseViewHolder的代码，通过`baseViewHolder.setView(bean, getContext());`可以调用子类的具体实现，这样就解耦了adapter和viewHolder之间的关联，并且不需要关注viewHolder的对象具体类型（因为在getViewTypeCount!=1的时候会在`onBindViewHolder(List<ViewBundle> list)`中绑定多个BaseViewHolder子类的类型），其实就是java多态的使用。
+
+```java
+    public static abstract class BaseViewHolder<T> {
+        public BaseViewHolder() {
+        }
+        protected abstract void setView(T bean, Context context);
+        public Class getClassTag() {
+            return this.getClass();
+        }
+    }
+```
+
+##2. ViewBundle的职能？
+在子类实现中有这样的一个方法`onBindViewHolder(List<ViewBundle> list)`，ViewBundle的作用是什么呢？
+
+```java
+    public static class ViewBundle {
+        public ViewBundle(int layoutId, Class<? extends BaseViewHolder> clazz) {
+            this.layoutId = layoutId;
+            this.vHClazz = clazz;
+        }
+
+        public Class<? extends BaseViewHolder> vHClazz;
+        public int layoutId;
+
+        @Override
+        public String toString() {
+            return "ViewBundle{" + "vHClazz=" + vHClazz + ", layoutId="
+                    + layoutId + '}';
+        }
+    }
+```
+
+可以看到其实是一个layoutId和viewHolder类型的对应关系，通过list将数组对象传递给父类，通过下标取得对应的class值。  
+
+到这里代码解析全部完毕，主要工作就是Adapter的简单定制，让子类的具体实现最小化。这样的处理在开发中可以减少相应的繁琐重复工作并降低错误率，父类中输出了输出了必要的log并在子类实现除错的情况跑出了对应的异常，可以很快的定位原因。
+
+有问题请联系我:ganquan3640@gmail.com。
