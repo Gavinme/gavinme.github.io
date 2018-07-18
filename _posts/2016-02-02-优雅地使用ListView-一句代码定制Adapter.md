@@ -4,7 +4,7 @@ title:      优雅地使用ListView
 subtitle:   一句代码定制Adapter
 date:       2016-02-02
 author:     BY
-header-img: img/post-bg-BJJ.jpg
+header-img: img/post-bg-coffee.jpg
 catalog: true
 tags:
     - android
