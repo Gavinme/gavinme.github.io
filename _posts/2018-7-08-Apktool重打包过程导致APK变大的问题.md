@@ -8,7 +8,7 @@ catalog: true
 tags:
     - apktool
     - 反编译
-    -yaml
+    - yaml
 ---
 
 
