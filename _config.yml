@@ -21,7 +21,7 @@ RSS: false
 github_username:    CarryGanLove
 # facebook_username:  Quad Gan
 jianshu_username:   f85192130fc7
-#twitter_username:   qiubaiying
+#twitter_username:   CarryGanLove
 
 
 
@@ -54,8 +54,8 @@ kramdown:
 
 
 # 评论系统
-# Disqus（https://disqus.com/）
-# disqus_username: qiubaiying
+# Disqus（https://CarryGanLove.com/）
+# disqus_username: CarryGanLove
 
 # Gitalk
 gitalk:
@@ -76,7 +76,7 @@ gitalk:
 
 # Google Analytics
 # ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-# ga_domain: qiubaiying.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+# ga_domain: CarryGanLove.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
