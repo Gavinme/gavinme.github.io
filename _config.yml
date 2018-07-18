@@ -11,7 +11,7 @@ github_repo: "https://github.com/CarryGanLove/CarryGanLove.github.io.git" # you 
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Do one thing at a time, and do well!"
+sidebar-about-description: "Yesterday's the past, tomorrow's the future, but today is a gift!"
 sidebar-avatar: /img/avatar.png     # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
