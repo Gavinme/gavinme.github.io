@@ -59,7 +59,7 @@ kramdown:
 
 # Gitalk
 gitalk:
-  enable: true    #是否开启Gitalk评论
+  enable: false    #是否开启Gitalk评论
   clientID: 76eaa50e7a1def63b6de                            #生成的clientID
   clientSecret: e6ac2d2eaa4940ccd35e25f888c6c32d4c3b5b10    #生成的clientSecret
   repo: CarryGanLove.github.io    #仓库名称
