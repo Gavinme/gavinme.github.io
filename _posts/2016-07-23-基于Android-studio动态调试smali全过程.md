@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      基于Android-studio动态调试smali全过程
+title:      基于Android studio动态调试smali全过程
 date:       2018-07-23
 author:     Gavin
 header-img: img/post-bg-coffee.jpg
