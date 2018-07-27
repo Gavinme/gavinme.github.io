@@ -52,7 +52,7 @@ apktool d *.apk
 ##### 2.3.1 配置Android Studio调试环境
 成功导入smali文件夹后配置远程调试的选项。选择 Run -->Edit Configurations，增加一个Remote调试的调试选项，端口选择:8700(未占用端口均可)。
 ![image.png](https://upload-images.jianshu.io/upload_images/1689923-3b24a5e29a9faac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-#### 2.3.2 进入等待调试
+##### 2.3.2 进入等待调试
 在需要的地方打好断点，通过一下命令行启动进程调试等待模式：
 - 命令行启动调试模式，`adb shell am start -D -n packagename/ MainActivity`
 packagename为进程名，MainActivity为首页Activity
@@ -80,7 +80,7 @@ adb forward tcp:8800 jdwp:$varId
 
 如下，查看smali中寄存器v3的对象：![image.png](https://upload-images.jianshu.io/upload_images/1689923-b6852b65b38448ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 3生成Smali代码和Apk插桩
+### 3 生成Smali代码和Apk插桩
 #### 3.1 生成Smali代码
 Smali是Android系统中Dalvik虚拟机指令语言，Smali代码一般为dex反编译之后得到，所以我们可以通过下面方法得到。
 1. 编写java代码`*.java`
