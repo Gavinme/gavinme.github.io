@@ -7,7 +7,7 @@ header-img: img/post-bg-coffee.jpg
 catalog: true
 tags:
     - android
-    - ListView
+    - debug
 ---
 
 Android Studio的各种调试技巧
