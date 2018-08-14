@@ -1,13 +1,13 @@
 # Site settings
 title: Gavin Blog
-SEOTitle: 甘泉的博客 | Gavin's Blog
+SEOTitle: gavin的博客 | Gavin's Blog
 header-img: img/home-bg-desk.jpg
 email: ganquan3640@gmail.com
 description: "Yesterday's the past, tomorrow's the future, but today is a gift."
 keyword: "Gavin, Gavin Blog, 甘泉的博客, ganquan, 甘泉, Android, javascript, 逆向,应用安全"
-url: "http://CarryGanLove.github.io"          # your host, for absolute URL
+url: "http://gavinme.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/CarryGanLove/CarryGanLove.github.io.git" # you code repository
+github_repo: "https://github.com/gavinme/gavinme.github.io.git" # you code repository
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
@@ -18,10 +18,10 @@ sidebar-avatar: /img/avatar.png     # use absolute URL, seeing it's used in both
 
 # SNS settings
 RSS: false
-github_username:    CarryGanLove
+github_username:    gavinme
 # facebook_username:  Quad Gan
 jianshu_username:   f85192130fc7
-#twitter_username:   CarryGanLove
+#twitter_username:   gavinme
 
 
 
@@ -54,17 +54,17 @@ kramdown:
 
 
 # 评论系统
-# Disqus（https://CarryGanLove.com/）
-# disqus_username: CarryGanLove
+# Disqus（https://gavinme.com/）
+# disqus_username: gavinme
 
 # Gitalk
 gitalk:
   enable: false    #是否开启Gitalk评论
   clientID: 76eaa50e7a1def63b6de                            #生成的clientID
   clientSecret: e6ac2d2eaa4940ccd35e25f888c6c32d4c3b5b10    #生成的clientSecret
-  repo: CarryGanLove.github.io    #仓库名称
-  owner: CarryGanLove    #github用户名
-  admin: CarryGanLove
+  repo: gavinme.github.io    #仓库名称
+  owner: gavinme    #github用户名
+  admin: gavinme
   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
@@ -78,7 +78,7 @@ ba_track_id: cb4585908d3d4413bbbd520ac9091d81
 
 # Google Analytics
 # ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-# ga_domain: CarryGanLove.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+# ga_domain: gavinme.com               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
